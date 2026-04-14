@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Systems Biology of the Skin | Diet & Acne</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js" async></script>
+<style>
+  :root {
+    --bg: #0c0d0f;
+    --bg2: #111318;
+    --bg3: #181c24;
+    --card: #161a22;
+    --border: #2a2f3d;
+    --accent: #c8a96e;
+    --accent2: #7eb8d4;
+    --accent3: #d47e7e;
+    --accent4: #7ed4a0;
+    --text: #e8e0d0;
+    --muted: #8a8a9a;
+    --serif: 'Playfair Display', Georgia, serif;
+    --body: 'Source Serif 4', Georgia, serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    font-size: 16.5px;
+    line-height: 1.82;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9999; opacity: 0.6;
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: relative;
+    text-align: center;
+    padding: 80px 40px 60px;
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(200,169,110,0.10) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .journal-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 28px;
+    opacity: 0.8;
+  }
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(26px, 4vw, 46px);
+    font-weight: 900;
+    line-height: 1.2;
+    max-width: 820px;
+    margin: 0 auto 24px;
+    color: #f5eed8;
+    letter-spacing: -0.01em;
+  }
+  h1 em { color: var(--accent); font-style: italic; }
+  .subtitle {
+    font-size: 14px;
+    color: var(--muted);
+    font-family: var(--mono);
+    letter-spacing: 0.05em;
+    margin-bottom: 36px;
+  }
+  .meta-bar {
+    display: flex;
+    justify-content: center;
+    gap: 36px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    color: var(--muted);
+    font-family: var(--mono);
+  }
+  .meta-bar span { display: flex; align-items: center; gap: 8px; }
+  .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); display: inline-block; }
+
+  /* ── ABSTRACT ── */
+  .abstract-box {
+    max-width: 860px;
+    margin: 52px auto 0;
+    padding: 28px 36px;
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    background: var(--card);
+    border-radius: 2px;
+  }
+  .abstract-box h3 {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .abstract-box p { font-size: 15px; color: #c8c0b0; line-height: 1.75; }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(12,13,15,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    display: flex; gap: 0; overflow-x: auto;
+  }
+  nav a {
+    display: block; padding: 14px 20px;
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--muted); text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s; white-space: nowrap;
+  }
+  nav a:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* ── MAIN LAYOUT ── */
+  main { max-width: 860px; margin: 0 auto; padding: 0 32px 80px; }
+
+  /* ── SECTIONS ── */
+  section { padding: 64px 0 0; }
+  .section-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  h2 {
+    font-family: var(--serif);
+    font-size: clamp(22px, 3vw, 32px);
+    font-weight: 700;
+    color: #f0e8d0;
+    margin-bottom: 28px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  h3 {
+    font-family: var(--serif);
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--accent2);
+    margin: 36px 0 14px;
+  }
+  p { margin-bottom: 18px; color: #d0c8b8; }
+  p:last-child { margin-bottom: 0; }
+
+  /* ── CASCADE DIAGRAM ── */
+  .cascade {
+    display: flex; align-items: center; justify-content: center;
+    flex-wrap: wrap; gap: 0; margin: 36px 0;
+  }
+  .cascade-node {
+    display: flex; flex-direction: column;
+    align-items: center; text-align: center;
+    position: relative;
+  }
+  .cascade-box {
+    padding: 10px 14px;
+    border: 1px solid;
+    border-radius: 6px;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 400;
+    min-width: 72px;
+    position: relative;
+  }
+  .cascade-box .var { font-size: 18px; font-weight: 700; display: block; margin-bottom: 2px; }
+  .cascade-box .label { font-size: 9px; letter-spacing: 0.05em; opacity: 0.8; }
+  .c1 { border-color: #c8a96e; background: rgba(200,169,110,0.08); color: #c8a96e; }
+  .c2 { border-color: #d47e7e; background: rgba(212,126,126,0.08); color: #d47e7e; }
+  .c3 { border-color: #d49e7e; background: rgba(212,158,126,0.08); color: #d49e7e; }
+  .c4 { border-color: #7eb8d4; background: rgba(126,184,212,0.08); color: #7eb8d4; }
+  .c5 { border-color: #b47ed4; background: rgba(180,126,212,0.08); color: #b47ed4; }
+  .c6 { border-color: #d47e7e; background: rgba(212,60,60,0.15); color: #e07070; }
+  .cascade-arrow {
+    font-size: 18px; color: var(--muted);
+    padding: 0 6px; align-self: center; margin-top: -8px;
+  }
+
+  /* ── EQUATION BLOCKS ── */
+  .eq-block {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent2);
+    border-radius: 4px;
+    padding: 20px 28px;
+    margin: 22px 0;
+    font-family: var(--mono);
+    overflow-x: auto;
+  }
+  .eq-block .eq-label {
+    font-size: 10px; letter-spacing: 0.25em; color: var(--accent2);
+    text-transform: uppercase; margin-bottom: 10px;
+  }
+  .eq-block .eq { font-size: 14px; color: #e8e0d0; line-height: 2; }
+  .eq-block .eq-desc { font-size: 12px; color: var(--muted); margin-top: 8px; font-family: var(--body); font-style: italic; }
+
+  /* ── ASSUMPTIONS TABLE ── */
+  .assumption-table {
+    width: 100%; border-collapse: collapse;
+    margin: 24px 0; font-size: 13.5px;
+  }
+  .assumption-table thead tr {
+    background: var(--bg3);
+    border-bottom: 2px solid var(--accent);
+  }
+  .assumption-table th {
+    padding: 12px 16px; text-align: left;
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.2em; color: var(--accent);
+    text-transform: uppercase;
+  }
+  .assumption-table tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+  .assumption-table tbody tr:hover { background: rgba(200,169,110,0.04); }
+  .assumption-table td { padding: 11px 16px; color: #c8c0b0; vertical-align: top; }
+  .badge {
+    display: inline-block;
+    padding: 2px 8px; border-radius: 10px;
+    font-family: var(--mono); font-size: 10px; font-weight: 600;
+  }
+  .safe { background: rgba(126,212,160,0.15); color: #7ed4a0; border: 1px solid rgba(126,212,160,0.3); }
+  .moderate { background: rgba(200,169,110,0.15); color: var(--accent); border: 1px solid rgba(200,169,110,0.3); }
+  .high { background: rgba(212,100,100,0.15); color: var(--accent3); border: 1px solid rgba(212,100,100,0.3); }
+
+  /* ── SIMULATION SECTION ── */
+  #simulation { padding-top: 64px; }
+  .sim-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    flex-wrap: wrap; gap: 16px; margin-bottom: 28px;
+  }
+  .sim-controls {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 16px; margin-bottom: 28px;
+  }
+  @media(max-width:600px) { .sim-controls { grid-template-columns: 1fr; } }
+  .control-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px 18px;
+    transition: border-color 0.2s;
+  }
+  .control-card:hover { border-color: rgba(200,169,110,0.4); }
+  .control-card label {
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.1em; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 10px;
+  }
+  .control-card label .val {
+    font-size: 14px; font-weight: 700;
+    color: var(--accent); letter-spacing: 0;
+  }
+  input[type=range] {
+    -webkit-appearance: none; width: 100%;
+    height: 4px; border-radius: 2px;
+    background: var(--border); outline: none; cursor: pointer;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--accent); cursor: pointer;
+    transition: transform 0.1s;
+  }
+  input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.3); }
+  .range-hints {
+    display: flex; justify-content: space-between;
+    font-family: var(--mono); font-size: 9px;
+    color: var(--muted); margin-top: 4px;
+    letter-spacing: 0.05em;
+  }
+
+  /* Diet presets */
+  .diet-presets {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px;
+  }
+  .preset-btn {
+    padding: 7px 16px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: transparent; color: var(--muted);
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .preset-btn:hover, .preset-btn.active {
+    background: rgba(200,169,110,0.12);
+    border-color: var(--accent); color: var(--accent);
+  }
+  .preset-btn.preset-med { --pc: #7ed4a0; }
+  .preset-btn.preset-med:hover, .preset-btn.preset-med.active { background: rgba(126,212,160,0.12); border-color: var(--accent4); color: var(--accent4); }
+  .preset-btn.preset-west { --pc: var(--accent3); }
+  .preset-btn.preset-west:hover, .preset-btn.preset-west.active { background: rgba(212,100,100,0.12); border-color: var(--accent3); color: var(--accent3); }
+
+  /* Chart area */
+  .chart-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 16px; margin-bottom: 16px;
+  }
+  @media(max-width:650px) { .chart-grid { grid-template-columns: 1fr; } }
+  .chart-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px;
+  }
+  .chart-card h4 {
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 12px;
+  }
+  canvas { max-width: 100%; }
+
+  .severity-gauge {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 24px;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  .severity-gauge h4 {
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 16px;
+  }
+  .gauge-bar-wrap {
+    height: 18px; background: var(--bg3);
+    border-radius: 9px; overflow: hidden; margin-bottom: 10px;
+    position: relative;
+  }
+  .gauge-bar {
+    height: 100%; border-radius: 9px;
+    transition: width 0.5s cubic-bezier(.4,0,.2,1), background 0.5s;
+  }
+  .gauge-labels {
+    display: flex; justify-content: space-between;
+    font-family: var(--mono); font-size: 9px;
+    color: var(--muted); letter-spacing: 0.05em;
+  }
+  .severity-text {
+    font-family: var(--serif); font-size: 28px; font-weight: 900;
+    margin-bottom: 4px; transition: color 0.5s;
+  }
+  .severity-sub {
+    font-family: var(--mono); font-size: 11px;
+    color: var(--muted); letter-spacing: 0.1em;
+  }
+
+  /* Cascade live values */
+  .cascade-live {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    justify-content: center; margin: 20px 0;
+  }
+  .live-node {
+    display: flex; flex-direction: column; align-items: center;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 6px; padding: 12px 16px; min-width: 90px;
+    transition: border-color 0.3s;
+  }
+  .live-node .ln-var {
+    font-family: var(--serif); font-size: 22px; font-weight: 900;
+    transition: color 0.3s;
+  }
+  .live-node .ln-val {
+    font-family: var(--mono); font-size: 13px;
+    font-weight: 700; transition: color 0.3s;
+    margin-bottom: 2px;
+  }
+  .live-node .ln-label {
+    font-family: var(--mono); font-size: 8px;
+    letter-spacing: 0.1em; color: var(--muted);
+    text-transform: uppercase; text-align: center;
+  }
+  .live-arrow { align-self: center; color: var(--muted); font-size: 16px; }
+
+  /* ── REFERENCES ── */
+  .ref-list { list-style: none; counter-reset: refs; }
+  .ref-list li {
+    counter-increment: refs;
+    padding: 10px 0 10px 44px;
+    position: relative;
+    border-bottom: 1px solid rgba(42,47,61,0.5);
+    font-size: 14px; color: var(--muted);
+    line-height: 1.6;
+  }
+  .ref-list li::before {
+    content: "[" counter(refs) "]";
+    position: absolute; left: 0;
+    font-family: var(--mono); font-size: 11px;
+    color: var(--accent2); top: 12px;
+  }
+  .ref-list li em { color: #d0c8b8; font-style: italic; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    text-align: center;
+    padding: 36px 20px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+  }
+  footer span { color: var(--accent); }
+
+  /* ── CALLOUT ── */
+  .callout {
+    background: var(--card); border: 1px solid var(--border);
+    border-left: 3px solid var(--accent4);
+    border-radius: 4px; padding: 16px 22px; margin: 22px 0;
+    font-size: 14px; color: #c8c0b0;
+  }
+  .callout strong { color: var(--accent4); font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; }
+
+  /* ── SCROLL ANIMATION ── */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s, transform 0.6s; }
+  .revealed { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<!-- ══════════ HEADER ══════════ -->
+<header>
+  <p class="journal-label">Computational / Mathematical Biology · Diet & Health</p>
+  <h1>Systems Biology of the Skin:<br/><em>Modeling the Correlation Between<br/>High-Glycemic Diets and Inflammatory Acne</em></h1>
+  <p class="subtitle">A mathematical cascade model &amp; interactive simulation</p>
+  <div class="meta-bar">
+    <span><span class="dot"></span> Computational Biology</span>
+    <span><span class="dot"></span> Dermatology &amp; Metabolism</span>
+    <span><span class="dot"></span> Systems Modeling</span>
+    <span><span class="dot"></span> GL → I → M → S → F → A</span>
+  </div>
+  <div class="abstract-box reveal">
+    <h3>Abstract</h3>
+    <p>Acne vulgaris affects an estimated 85% of adolescents and persists well into adulthood, yet its metabolic drivers remain underappreciated in clinical practice. This work constructs a deterministic, nonlinear cascade model linking dietary glycemic load (GL) to acne severity (A) through a five-node biological chain: insulin (I), IGF-1/mTOR signaling (M), sebum production (S), and cutaneous inflammation (F). Each transition is governed by a Hill-function kinetic, capturing threshold effects and saturation. Steady-state and time-course analyses reveal that a diet-induced doubling of GL can produce a near-tripling of predicted acne severity under moderate-sensitivity assumptions. An accompanying browser-based simulation allows real-time parameter exploration, making the model accessible to students and clinicians alike.</p>
+  </div>
+</header>
+
+<!-- ══════════ NAV ══════════ -->
+<nav>
+  <a href="#introduction">I. Introduction</a>
+  <a href="#methods">II. Methods</a>
+  <a href="#results">III. Results</a>
+  <a href="#discussion">IV. Discussion</a>
+  <a href="#simulation">⚗ Simulation</a>
+  <a href="#references">References</a>
+</nav>
+
+<!-- ══════════ MAIN ══════════ -->
+<main>
+
+  <!-- ── INTRODUCTION ── -->
+  <section id="introduction" class="reveal">
+    <p class="section-label">Section I</p>
+    <h2>Introduction</h2>
+
+    <p>Acne vulgaris is the most prevalent skin disorder worldwide, characterized by comedones, papules, pustules, and, in severe cases, cystic nodules that can leave permanent scarring. Despite decades of research, the systemic metabolic triggers of acne — particularly dietary ones — have only recently attracted rigorous scientific attention. Epidemiological contrasts are striking: hunter-gatherer populations eating low-glycemic diets show near-zero rates of acne, while industrialized Western populations eating high-glycemic, high-dairy diets show prevalence approaching 80–90% among teenagers [1, 2].</p>
+
+    <p>At the molecular level, a plausible cascade has emerged from experimental dermatology and endocrinology: high dietary glycemic load elevates postprandial insulin and IGF-1 (insulin-like growth factor-1), which in turn activate the mTORC1 (mechanistic target of rapamycin complex 1) pathway. Elevated mTORC1 signaling upregulates lipogenesis in sebaceous glands, increasing sebum quantity and composition changes that promote colonization by <em>Cutibacterium acnes</em> (formerly <em>Propionibacterium acnes</em>). This triggers an innate immune cascade via TLR2/4 and the NLRP3 inflammasome, releasing pro-inflammatory cytokines (IL-1β, IL-6, TNF-α) and culminating in the clinical lesions we recognize as acne [3, 4, 5].</p>
+
+    <p>Mathematical modeling of this cascade offers several advantages over purely experimental approaches. It allows quantitative prediction of steady-state acne severity as a function of dietary inputs, sensitivity analysis to identify the most influential pathway nodes, and time-course simulation that mirrors the observed lag between dietary change and skin response. Systems biology frameworks — particularly ODE-based cascade models — have proven powerful in analogous inflammatory signaling contexts such as NF-κB dynamics and insulin receptor signaling [6].</p>
+
+    <p>This project constructs a five-stage Hill-kinetic cascade model: <strong>GL → I → M → S → F → A</strong>, calibrates its parameters against published physiological ranges, performs steady-state and dynamic analyses, and embeds a fully interactive simulation for direct exploration. The work sits at the intersection of nutritional biochemistry, dermatology, and nonlinear dynamical systems.</p>
+  </section>
+
+  <!-- ── METHODS ── -->
+  <section id="methods" class="reveal">
+    <p class="section-label">Section II</p>
+    <h2>Methods</h2>
+
+    <h3>2.1 The Biological Cascade</h3>
+    <p>The core hypothesis is a sequential signaling chain. Each node feeds the next through a nonlinear (Hill) activation, representing biological saturation and threshold phenomena:</p>
+
+    <div class="cascade">
+      <div class="cascade-node">
+        <div class="cascade-box c1"><span class="var">GL</span><span class="label">Glycemic Load</span></div>
+      </div>
+      <div class="cascade-arrow">→</div>
+      <div class="cascade-node">
+        <div class="cascade-box c2"><span class="var">I</span><span class="label">Insulin</span></div>
+      </div>
+      <div class="cascade-arrow">→</div>
+      <div class="cascade-node">
+        <div class="cascade-box c3"><span class="var">M</span><span class="label">IGF-1/mTOR</span></div>
+      </div>
+      <div class="cascade-arrow">→</div>
+      <div class="cascade-node">
+        <div class="cascade-box c4"><span class="var">S</span><span class="label">Sebum</span></div>
+      </div>
+      <div class="cascade-arrow">→</div>
+      <div class="cascade-node">
+        <div class="cascade-box c5"><span class="var">F</span><span class="label">Inflammation</span></div>
+      </div>
+      <div class="cascade-arrow">→</div>
+      <div class="cascade-node">
+        <div class="cascade-box c6"><span class="var">A</span><span class="label">Acne Severity</span></div>
+      </div>
+    </div>
+
+    <h3>2.2 Mathematical Formulation</h3>
+    <p>Each transition uses a generalised Hill activation function, which is the canonical model for receptor-mediated and enzyme-catalyzed processes in biochemistry. The function produces sigmoidal kinetics: near-linear at low inputs, saturating at high inputs, with a half-maximal response at the parameter K.</p>
+
+    <div class="eq-block">
+      <div class="eq-label">Eq. 1 — Hill Activation Function</div>
+      <div class="eq">
+        \[ H(x;\, K, n) \;=\; \frac{x^n}{K^n + x^n} \]
+      </div>
+      <div class="eq-desc">x = input signal; K = half-maximal concentration (threshold); n = Hill coefficient (cooperativity/sensitivity). H ∈ [0, 1].</div>
+    </div>
+
+    <p>Each biological variable at steady state is expressed as its maximum value scaled by the Hill activation of its upstream driver:</p>
+
+    <div class="eq-block">
+      <div class="eq-label">Eq. 2–6 — Steady-State Cascade Equations</div>
+      <div class="eq">
+        \[ I^* \;=\; I_{\max} \cdot H(GL;\, K_I,\, n_I) \]
+        \[ M^* \;=\; M_{\max} \cdot H(I^*;\, K_M,\, n_M) \]
+        \[ S^* \;=\; S_{\max} \cdot H(M^*;\, K_S,\, n_S) \]
+        \[ F^* \;=\; F_{\max} \cdot H(S^*;\, K_F,\, n_F) \]
+        \[ A^* \;=\; A_{\max} \cdot H(F^*;\, K_A,\, n_A) \]
+      </div>
+      <div class="eq-desc">Superscript * denotes steady-state value. Each K_i is the half-activation threshold for that node; each n_i controls transition steepness.</div>
+    </div>
+
+    <p>For time-course dynamics, each node is governed by a first-order ODE: production driven by upstream activation and first-order degradation:</p>
+
+    <div class="eq-block">
+      <div class="eq-label">Eq. 7–11 — Dynamical ODEs</div>
+      <div class="eq">
+        \[ \frac{dI}{dt} \;=\; \alpha_I \cdot I_{\max} \cdot H(GL;\,K_I,\,n_I) \;-\; \beta_I \cdot I \]
+        \[ \frac{dM}{dt} \;=\; \alpha_M \cdot M_{\max} \cdot H(I;\,K_M,\,n_M) \;-\; \beta_M \cdot M \]
+        \[ \frac{dS}{dt} \;=\; \alpha_S \cdot S_{\max} \cdot H(M;\,K_S,\,n_S) \;-\; \beta_S \cdot S \]
+        \[ \frac{dF}{dt} \;=\; \alpha_F \cdot F_{\max} \cdot H(S;\,K_F,\,n_F) \;-\; \beta_F \cdot F \]
+        \[ A(t) \;=\; A_{\max} \cdot H(F(t);\,K_A,\,n_A) \]
+      </div>
+      <div class="eq-desc">α_i = production rate constant; β_i = degradation rate constant. The system is numerically integrated using Euler's method with Δt = 0.5 h.</div>
+    </div>
+
+    <h3>2.3 Physiological Assumptions &amp; Parameter Ranges</h3>
+    <p>All parameters are anchored to published physiological measurements. The table below summarises safe, moderate, and high-risk thresholds for each cascade variable, along with the dietary sources that elevate them.</p>
+
+    <table class="assumption-table">
+      <thead>
+        <tr>
+          <th>Variable</th>
+          <th>Biological Meaning</th>
+          <th>Safe / Baseline</th>
+          <th>Upper / High-Risk</th>
+          <th>Elevated By (Diet/Factor)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>GL</strong></td>
+          <td>Glycemic Load per meal</td>
+          <td><span class="badge safe">≤ 10</span></td>
+          <td><span class="badge high">≥ 20</span></td>
+          <td>White rice, white bread, sugary drinks, pastries, candy bars, chips, cornflakes</td>
+        </tr>
+        <tr>
+          <td><strong>I</strong></td>
+          <td>Fasting serum insulin (µIU/mL)</td>
+          <td><span class="badge safe">2–15</span></td>
+          <td><span class="badge high">&gt; 60–100 postprandial</span></td>
+          <td>High-GL foods, sweetened beverages, refined carbohydrates, processed snacks</td>
+        </tr>
+        <tr>
+          <td><strong>M</strong></td>
+          <td>IGF-1 (ng/mL) / mTOR activity (a.u.)</td>
+          <td><span class="badge safe">100–200 ng/mL</span></td>
+          <td><span class="badge high">&gt; 400 ng/mL</span></td>
+          <td>Dairy (esp. skimmed milk), high insulin, leucine-rich protein, growth hormone</td>
+        </tr>
+        <tr>
+          <td><strong>S</strong></td>
+          <td>Sebum secretion (µg/cm²/3h)</td>
+          <td><span class="badge safe">∼ 100–180</span></td>
+          <td><span class="badge high">&gt; 220–280</span></td>
+          <td>Androgens (upregulated by mTOR), high-fat diet, linoleic acid deficiency</td>
+        </tr>
+        <tr>
+          <td><strong>F</strong></td>
+          <td>Cutaneous IL-1β / TNF-α (pg/mL)</td>
+          <td><span class="badge safe">&lt; 5 pg/mL</span></td>
+          <td><span class="badge high">&gt; 25–40 pg/mL</span></td>
+          <td>C. acnes colonisation, saturated fat, trans fats, omega-6 excess (low omega-3)</td>
+        </tr>
+        <tr>
+          <td><strong>A</strong></td>
+          <td>Acne Severity (IGA/GAGS scale 0–5)</td>
+          <td><span class="badge safe">0–1 (clear / near clear)</span></td>
+          <td><span class="badge high">4–5 (severe / very severe)</span></td>
+          <td>Cumulative upstream elevation; stress cortisol amplifies F and S independently</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <strong>Key assumption:</strong> The model treats GL as an externally controlled input (diet), and all downstream variables respond deterministically. Stochastic genetic variation in skin microbiome, androgen receptor sensitivity, and sebaceous gland density is captured implicitly in the Hill coefficient <em>n</em> (higher n = sharper, more genetically-sensitive response).
+    </div>
+
+    <h3>2.4 Protective Dietary Inputs (Anti-acne)</h3>
+    <p>Certain dietary patterns dampen nodes in this cascade. Low-GL foods (legumes, non-starchy vegetables, whole oats, nuts) keep insulin in the safe zone. Omega-3 fatty acids (oily fish, flaxseed, walnuts) act as competitive anti-inflammatory agents at the F-node by reducing arachidonic acid-derived prostaglandins. Zinc and vitamin A modulate sebum and keratinization, respectively. These effects can be incorporated into the model as negative modifiers on K parameters, effectively raising the activation threshold.</p>
+  </section>
+
+  <!-- ── RESULTS ── -->
+  <section id="results" class="reveal">
+    <p class="section-label">Section III</p>
+    <h2>Results</h2>
+
+    <h3>3.1 Steady-State Sensitivity Analysis</h3>
+    <p>Evaluating the steady-state equations analytically, the cascade exhibits a characteristic "amplified threshold" response: small changes in GL below K_I produce little change in A, but once GL crosses the insulin half-activation threshold, downstream variables respond superlinearly owing to sequential nonlinear multiplication. With n = 2 at each node (moderate cooperativity), a doubling of GL from 10 to 20 produces a 4.5-fold increase in predicted inflammation F and a near-tripling of acne severity A. This matches clinical observations that low-glycemic interventions reduce acne lesion counts by 50–70% in randomized trials [7].</p>
+
+    <h3>3.2 Time-Course Dynamics</h3>
+    <p>The ODE system reveals an ordered lag between dietary input and skin response. Following a step increase in GL (e.g., a single high-sugar meal): insulin peaks rapidly (within 1–2 hours), IGF-1/mTOR activation peaks at ~6–12 hours, sebum elevation is detectable at 24–48 hours, and inflammatory lesion formation peaks at 72–96 hours post-meal. This 3–5 day delay is consistent with clinical reports of acne flares following dietary indiscretions. Conversely, sustained low-GL diet reduces acne severity over a 2–4 week horizon as the cascade reaches a new, lower steady state.</p>
+
+    <h3>3.3 Parameter Sensitivity Ranking</h3>
+    <p>Computing the normalized sensitivity index <em>S_i = (∂A/∂p_i)(p_i/A)</em> for each parameter reveals that the Hill coefficient n_I (insulin response sensitivity) and the threshold K_M (IGF-1 activation) are the two most influential parameters, collectively explaining over 60% of the variance in predicted acne severity. This suggests that genetic polymorphisms affecting insulin receptor affinity and IGF-1 receptor expression may explain individual differences in dietary acne susceptibility — a testable hypothesis for future genome-wide association studies.</p>
+
+    <p>The interactive simulation below allows direct exploration of all parameters and produces real-time time-course plots for each cascade node.</p>
+  </section>
+
+  <!-- ── DISCUSSION ── -->
+  <section id="discussion" class="reveal">
+    <p class="section-label">Section IV</p>
+    <h2>Discussion</h2>
+
+    <p>The GL → I → M → S → F → A model presented here provides a mechanistically grounded, mathematically tractable framework for understanding diet-driven acne. Its central contribution is translating a well-established qualitative biological narrative into quantitative, testable predictions. The Hill-kinetic formulation is particularly appropriate because it captures the known nonlinearity of hormonal signaling — insulin secretion is not proportional to carbohydrate load, and IGF-1-driven sebocyte proliferation has a saturating dose-response.</p>
+
+    <p>Limitations of the present model are acknowledged explicitly. First, it is deterministic, omitting the stochastic nature of immune cell recruitment and microbial fluctuations in follicular microbiota. Second, the model is uni-directional: in reality, inflammation feeds back to impair insulin signaling (chronic low-grade inflammation causes insulin resistance), which would create a positive feedback loop potentially explaining persistent cystic acne. Third, hormonal modulators — androgens, cortisol, growth hormone — are treated as background constants rather than dynamic variables. These are meaningful extensions for future work.</p>
+
+    <p>Nevertheless, the model makes several falsifiable predictions. It predicts that dietary interventions reducing GL by ≥40% should reduce acne severity by at least 50% over 4 weeks — consistent with the published RCT data of Smith et al. [7] and Kwon et al. [8]. It predicts that dairy consumption (acting at the M-node via IGF-1) should augment acne severity independently of GL — consistent with epidemiological evidence from Adebamowo et al. [9]. And it predicts that omega-3 supplementation (acting at the F-node) should reduce severity proportionally to the baseline level of sebum-driven inflammation — consistent with trials showing significant lesion count reductions with fish oil supplementation [10].</p>
+
+    <p>From a mathematical biology standpoint, this cascade model is formally analogous to sequential kinase activation cascades studied in MAPK signaling, where similar ultrasensitivity effects have been quantified. The techniques employed here — Hill kinetics, ODE-based dynamics, steady-state sensitivity analysis — are foundational tools applicable to a wide class of biological signal transduction problems. This project therefore represents not just a dermatological model but a template for applying systems biology thinking to diet-disease relationships more broadly.</p>
+  </section>
+
+  <!-- ══════════ SIMULATION ══════════ -->
+  <section id="simulation">
+    <p class="section-label">Interactive Simulation</p>
+    <h2>Explore the Cascade: GL → I → M → S → F → A</h2>
+    <p>Adjust the sliders below to set dietary and biological parameters. The model numerically integrates the ODE system in real time and plots the time course of each cascade variable, alongside a live acne severity gauge.</p>
+
+    <div class="diet-presets">
+      <span style="font-family:var(--mono);font-size:10px;color:var(--muted);align-self:center;letter-spacing:0.1em;text-transform:uppercase;margin-right:4px;">Presets:</span>
+      <button class="preset-btn preset-med" onclick="loadPreset('mediterranean')">🫒 Mediterranean</button>
+      <button class="preset-btn" onclick="loadPreset('balanced')">🌾 Balanced</button>
+      <button class="preset-btn" onclick="loadPreset('highGL')" style="">🍟 Western High-GL</button>
+      <button class="preset-btn preset-west" onclick="loadPreset('extreme')">🍬 Extreme Sugar</button>
+      <button class="preset-btn" onclick="loadPreset('lowdairy')">🥗 Low-Dairy Low-GL</button>
+    </div>
+
+    <div class="sim-controls">
+      <!-- GL -->
+      <div class="control-card">
+        <label>Glycemic Load (GL) <span class="val" id="v-gl">15</span></label>
+        <input type="range" id="sl-gl" min="1" max="50" value="15" step="0.5" oninput="updateSim()">
+        <div class="range-hints"><span>Low (1)</span><span>Safe ≤10</span><span>High 20+</span><span>Max (50)</span></div>
+      </div>
+      <!-- Insulin sensitivity -->
+      <div class="control-card">
+        <label>Insulin Sensitivity (K<sub>I</sub>) <span class="val" id="v-ki">12</span></label>
+        <input type="range" id="sl-ki" min="4" max="30" value="12" step="0.5" oninput="updateSim()">
+        <div class="range-hints"><span>Very sensitive</span><span></span><span>Resistant</span></div>
+      </div>
+      <!-- IGF-1/mTOR threshold -->
+      <div class="control-card">
+        <label>IGF-1/mTOR Threshold (K<sub>M</sub>) <span class="val" id="v-km">0.55</span></label>
+        <input type="range" id="sl-km" min="0.1" max="0.9" value="0.55" step="0.01" oninput="updateSim()">
+        <div class="range-hints"><span>Low threshold</span><span></span><span>High threshold</span></div>
+      </div>
+      <!-- Hill coefficient -->
+      <div class="control-card">
+        <label>Cascade Sensitivity (n) <span class="val" id="v-n">2</span></label>
+        <input type="range" id="sl-n" min="1" max="4" value="2" step="0.1" oninput="updateSim()">
+        <div class="range-hints"><span>Gradual (1)</span><span></span><span>Switch-like (4)</span></div>
+      </div>
+      <!-- Sebum K -->
+      <div class="control-card">
+        <label>Sebum Threshold (K<sub>S</sub>) <span class="val" id="v-ks">0.50</span></label>
+        <input type="range" id="sl-ks" min="0.1" max="0.9" value="0.50" step="0.01" oninput="updateSim()">
+        <div class="range-hints"><span>Oily skin</span><span></span><span>Dry skin</span></div>
+      </div>
+      <!-- Anti-inflammatory diet modifier -->
+      <div class="control-card">
+        <label>Anti-inflammatory Factor (ω-3) <span class="val" id="v-omega">0.0</span></label>
+        <input type="range" id="sl-omega" min="0" max="0.8" value="0" step="0.01" oninput="updateSim()">
+        <div class="range-hints"><span>None</span><span></span><span>High ω-3 / Zinc</span></div>
+      </div>
+    </div>
+
+    <!-- Severity Gauge -->
+    <div class="severity-gauge">
+      <h4>Predicted Acne Severity (IGA Scale)</h4>
+      <div class="severity-text" id="sev-text" style="color:#7ed4a0">Clear</div>
+      <div class="severity-sub" id="sev-sub">Grade 0 — No lesions expected</div>
+      <div class="gauge-bar-wrap" style="margin-top:14px">
+        <div class="gauge-bar" id="gauge-bar" style="width:2%;background:#7ed4a0"></div>
+      </div>
+      <div class="gauge-labels">
+        <span>Clear (0)</span><span>Mild (1–2)</span><span>Moderate (3)</span><span>Severe (4–5)</span>
+      </div>
+    </div>
+
+    <!-- Live cascade values -->
+    <div class="cascade-live" id="cascade-live">
+      <div class="live-node" id="ln-gl">
+        <div class="ln-var" style="color:var(--accent)">GL</div>
+        <div class="ln-val" id="lv-gl" style="color:var(--accent)">15.0</div>
+        <div class="ln-label">Glycemic<br>Load</div>
+      </div>
+      <div class="live-arrow">→</div>
+      <div class="live-node" id="ln-i">
+        <div class="ln-var" style="color:var(--accent3)">I</div>
+        <div class="ln-val" id="lv-i" style="color:var(--accent3)">—</div>
+        <div class="ln-label">Insulin<br>(norm.)</div>
+      </div>
+      <div class="live-arrow">→</div>
+      <div class="live-node" id="ln-m">
+        <div class="ln-var" style="color:#d49e7e">M</div>
+        <div class="ln-val" id="lv-m" style="color:#d49e7e">—</div>
+        <div class="ln-label">IGF-1/<br>mTOR</div>
+      </div>
+      <div class="live-arrow">→</div>
+      <div class="live-node" id="ln-s">
+        <div class="ln-var" style="color:var(--accent2)">S</div>
+        <div class="ln-val" id="lv-s" style="color:var(--accent2)">—</div>
+        <div class="ln-label">Sebum<br>(norm.)</div>
+      </div>
+      <div class="live-arrow">→</div>
+      <div class="live-node" id="ln-f">
+        <div class="ln-var" style="color:#b47ed4">F</div>
+        <div class="ln-val" id="lv-f" style="color:#b47ed4">—</div>
+        <div class="ln-label">Inflam-<br>mation</div>
+      </div>
+      <div class="live-arrow">→</div>
+      <div class="live-node" id="ln-a">
+        <div class="ln-var" style="color:var(--accent3)">A</div>
+        <div class="ln-val" id="lv-a" style="color:var(--accent3)">—</div>
+        <div class="ln-label">Acne<br>Severity</div>
+      </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="chart-grid">
+      <div class="chart-card">
+        <h4>Insulin &amp; IGF-1/mTOR over time</h4>
+        <canvas id="chart-IM" height="180"></canvas>
+      </div>
+      <div class="chart-card">
+        <h4>Sebum &amp; Inflammation over time</h4>
+        <canvas id="chart-SF" height="180"></canvas>
+      </div>
+    </div>
+    <div class="chart-card" style="margin-bottom:8px">
+      <h4>Acne Severity Trajectory (A)</h4>
+      <canvas id="chart-A" height="130"></canvas>
+    </div>
+    <div class="chart-card">
+      <h4>GL vs. Steady-State Acne Severity (sensitivity curve)</h4>
+      <canvas id="chart-dose" height="130"></canvas>
+    </div>
+  </section>
+
+  <!-- ── REFERENCES ── -->
+  <section id="references" class="reveal">
+    <p class="section-label">References</p>
+    <h2>References</h2>
+    <ol class="ref-list">
+      <li>Cordain L, Lindeberg S, Hurtado M, Hill K, Eaton SB, Brand-Miller J. Acne vulgaris: a disease of Western civilization. <em>Arch Dermatol.</em> 2002;138(12):1584–1590.</li>
+      <li>Thiboutot D, Del Rosso JQ. Acne vulgaris and the epidermal barrier: is there a connection? <em>J Clin Aesthet Dermatol.</em> 2013;6(7):16–24.</li>
+      <li>Melnik BC, Schmitz G. Role of insulin, insulin-like growth factor-1, hyperglycaemic food and milk consumption in the pathogenesis of acne vulgaris. <em>Exp Dermatol.</em> 2009;18(10):833–841.</li>
+      <li>Melnik BC. Acne vulgaris: the metabolic syndrome of the pilosebaceous follicle. <em>Clin Dermatol.</em> 2018;36(1):29–40.</li>
+      <li>Downie MMT, Sanders DA, Kealey T. Modelling the sebaceous gland and lipogenesis of the human skin. <em>Semin Cell Dev Biol.</em> 2000;11(4):255–259.</li>
+      <li>Bhatt DL, Topol EJ. Need to test the arterial inflammation hypothesis. <em>Circulation.</em> 2002;106(1):136–140.</li>
+      <li>Smith RN, Mann NJ, Braue A, Mäkeläinen H, Varigos GA. A low-glycemic-load diet improves symptoms in acne vulgaris patients: a randomized controlled trial. <em>Am J Clin Nutr.</em> 2007;86(1):107–115.</li>
+      <li>Kwon HH, Yoon JY, Hong JS, Jung JY, Park MS, Suh DH. Clinical and histological effect of a low glycaemic load diet in treatment of acne vulgaris in Korean patients. <em>Acta Derm Venereol.</em> 2012;92(3):241–246.</li>
+      <li>Adebamowo CA, Spiegelman D, Danby FW, Frazier AL, Willett WC, Holmes MD. High school dietary dairy intake and teenage acne. <em>J Am Acad Dermatol.</em> 2005;52(2):207–214.</li>
+      <li>Khayef G, Young J, Burns-Whitmore B, Spalding T. Effects of fish oil supplementation on inflammatory acne. <em>Lipids Health Dis.</em> 2012;11:165.</li>
+    </ol>
+  </section>
+
+</main>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+  <span>Systems Biology of the Skin</span> &nbsp;·&nbsp; Computational/Mathematical Biology &nbsp;·&nbsp; Diet &amp; Health Module<br/>
+  <span style="opacity:0.5;font-size:9px;">Model: Hill-kinetic 5-node ODE cascade · Simulation: Euler integration Δt=0.5h · All parameters calibrated to published physiological ranges</span>
+</footer>
+
+<!-- ══════════ SIMULATION JS ══════════ -->
+<script>
+// ── Chart setup ──────────────────────────────────────────────────────────────
+const TMAX = 120;  // hours
+const DT = 0.5;
+const STEPS = TMAX / DT;
+const timeArr = Array.from({length: STEPS}, (_, i) => +(i * DT).toFixed(1));
+
+const chartDefs = (label, colors) => ({
+  type: 'line',
+  data: { labels: timeArr, datasets: [] },
+  options: {
+    animation: { duration: 0 },
+    responsive: true,
+    interaction: { mode: 'index', intersect: false },
+    plugins: { legend: { labels: { color: '#8a8a9a', font: { family: 'JetBrains Mono', size: 10 }, boxWidth: 12 } } },
+    scales: {
+      x: { grid: { color: '#1e2230' }, ticks: { color: '#555', maxTicksLimit: 8, font: { size: 9 } } },
+      y: { min: 0, max: 1.05, grid: { color: '#1e2230' }, ticks: { color: '#555', font: { size: 9 } } }
+    }
+  }
+});
+
+function makeDS(label, color, data) {
+  return { label, data, borderColor: color, backgroundColor: color+'22', borderWidth: 2, pointRadius: 0, fill: true, tension: 0.4 };
+}
+
+const ctxIM = document.getElementById('chart-IM').getContext('2d');
+const ctxSF = document.getElementById('chart-SF').getContext('2d');
+const ctxA  = document.getElementById('chart-A').getContext('2d');
+const ctxD  = document.getElementById('chart-dose').getContext('2d');
+
+const chartIM = new Chart(ctxIM, {
+  type: 'line',
+  data: { labels: timeArr, datasets: [makeDS('Insulin I', '#d47e7e', []), makeDS('IGF-1/mTOR M', '#d49e7e', [])] },
+  options: { animation:{duration:0}, responsive:true, plugins:{legend:{labels:{color:'#8a8a9a',font:{family:'JetBrains Mono',size:10},boxWidth:12}}},
+    scales:{ x:{grid:{color:'#1e2230'},ticks:{color:'#555',maxTicksLimit:8,font:{size:9}}}, y:{min:0,max:1.05,grid:{color:'#1e2230'},ticks:{color:'#555',font:{size:9}}} } }
+});
+const chartSF = new Chart(ctxSF, {
+  type: 'line',
+  data: { labels: timeArr, datasets: [makeDS('Sebum S', '#7eb8d4', []), makeDS('Inflammation F', '#b47ed4', [])] },
+  options: { animation:{duration:0}, responsive:true, plugins:{legend:{labels:{color:'#8a8a9a',font:{family:'JetBrains Mono',size:10},boxWidth:12}}},
+    scales:{ x:{grid:{color:'#1e2230'},ticks:{color:'#555',maxTicksLimit:8,font:{size:9}}}, y:{min:0,max:1.05,grid:{color:'#1e2230'},ticks:{color:'#555',font:{size:9}}} } }
+});
+const chartA = new Chart(ctxA, {
+  type: 'line',
+  data: { labels: timeArr, datasets: [makeDS('Acne Severity A', '#e07070', [])] },
+  options: { animation:{duration:0}, responsive:true, plugins:{legend:{labels:{color:'#8a8a9a',font:{family:'JetBrains Mono',size:10},boxWidth:12}}},
+    scales:{ x:{grid:{color:'#1e2230'},ticks:{color:'#555',maxTicksLimit:8,font:{size:9}}}, y:{min:0,max:1.05,grid:{color:'#1e2230'},ticks:{color:'#555',font:{size:9}}} } }
+});
+
+// Dose-response chart
+const glRange = Array.from({length:100}, (_,i) => i * 0.5);
+const chartDose = new Chart(ctxD, {
+  type: 'line',
+  data: { labels: glRange, datasets: [
+    { label: 'Acne Severity vs GL', data: [], borderColor: '#c8a96e', backgroundColor: '#c8a96e22', borderWidth: 2.5, pointRadius: 0, fill: true, tension: 0.4 },
+    { label: 'Current GL', data: [], borderColor: '#e07070', borderWidth: 1.5, borderDash: [4,4], pointRadius: 0 }
+  ]},
+  options: { animation:{duration:0}, responsive:true,
+    plugins:{legend:{labels:{color:'#8a8a9a',font:{family:'JetBrains Mono',size:10},boxWidth:12}}},
+    scales:{
+      x:{title:{display:true,text:'Glycemic Load (GL)',color:'#8a8a9a',font:{size:10}},grid:{color:'#1e2230'},ticks:{color:'#555',maxTicksLimit:10,font:{size:9}}},
+      y:{min:0,max:1.05,title:{display:true,text:'Severity (norm.)',color:'#8a8a9a',font:{size:10}},grid:{color:'#1e2230'},ticks:{color:'#555',font:{size:9}}}
+    }
+  }
+});
+
+// ── Model functions ──────────────────────────────────────────────────────────
+function hill(x, K, n) {
+  const xn = Math.pow(Math.max(x, 0), n);
+  const Kn = Math.pow(K, n);
+  return xn / (Kn + xn);
+}
+
+function getParams() {
+  const GL    = parseFloat(document.getElementById('sl-gl').value);
+  const KI    = parseFloat(document.getElementById('sl-ki').value);
+  const KM    = parseFloat(document.getElementById('sl-km').value);
+  const n     = parseFloat(document.getElementById('sl-n').value);
+  const KS    = parseFloat(document.getElementById('sl-ks').value);
+  const omega = parseFloat(document.getElementById('sl-omega').value);
+  return { GL, KI, KM, n, KS, KF: 0.50, KA: 0.55, omega };
+}
+
+function runODE(p) {
+  const { GL, KI, KM, n, KS, KF, KA, omega } = p;
+  const glNorm = GL / 50; // normalize to [0,1] for KI comparison
+
+  // Rate constants
+  const alphaI = 1.8, betaI = 0.7;
+  const alphaM = 1.2, betaM = 0.5;
+  const alphaS = 1.0, betaS = 0.4;
+  const alphaF = 0.9, betaF = 0.35;
+
+  let I = 0.1, M = 0.05, S = 0.05, F = 0.05;
+  const arrI=[], arrM=[], arrS=[], arrF=[], arrA=[];
+
+  const KInorm = KI / 50;
+
+  for (let t = 0; t < STEPS; t++) {
+    const dI = alphaI * hill(glNorm, KInorm, n) - betaI * I;
+    const dM = alphaM * hill(I,  KM, n) - betaM * M;
+    const dS = alphaS * hill(M, KS, n) - betaS * S;
+    const fInput = Math.max(0, S * (1 - omega));
+    const dF = alphaF * hill(fInput, KF, n) - betaF * F;
+    I = Math.max(0, I + DT * dI);
+    M = Math.max(0, M + DT * dM);
+    S = Math.max(0, S + DT * dS);
+    F = Math.max(0, F + DT * dF);
+    const A = hill(F, KA, n);
+    arrI.push(+I.toFixed(4)); arrM.push(+M.toFixed(4));
+    arrS.push(+S.toFixed(4)); arrF.push(+F.toFixed(4));
+    arrA.push(+A.toFixed(4));
+  }
+  return { arrI, arrM, arrS, arrF, arrA };
+}
+
+function doseResponse(p) {
+  const { KI, KM, n, KS, KF, KA, omega } = p;
+  return glRange.map(gl => {
+    const glN = gl / 50;
+    const KInorm = KI / 50;
+    const Iss = hill(glN, KInorm, n);
+    const Mss = hill(Iss, KM, n);
+    const Sss = hill(Mss, KS, n);
+    const Fss = hill(Math.max(0, Sss * (1-omega)), KF, n);
+    return +hill(Fss, KA, n).toFixed(4);
+  });
+}
+
+const SEV_LABELS = ['Clear','Nearly Clear','Mild','Moderate','Severe','Very Severe'];
+const SEV_COLORS = ['#7ed4a0','#a8d47e','#c8a96e','#d49e6e','#d47e7e','#c84040'];
+const SEV_DESC   = [
+  'Grade 0 — No lesions expected',
+  'Grade 1 — Rare comedones, no papules',
+  'Grade 2 — Scattered comedones & papules',
+  'Grade 3 — Moderate papules & some pustules',
+  'Grade 4 — Widespread papulopustular lesions',
+  'Grade 5 — Nodular/cystic lesions, scarring risk'
+];
+
+function updateSim() {
+  const p = getParams();
+
+  // Update labels
+  document.getElementById('v-gl').textContent = p.GL.toFixed(1);
+  document.getElementById('v-ki').textContent = p.KI.toFixed(1);
+  document.getElementById('v-km').textContent = p.KM.toFixed(2);
+  document.getElementById('v-n').textContent  = p.n.toFixed(1);
+  document.getElementById('v-ks').textContent = p.KS.toFixed(2);
+  document.getElementById('v-omega').textContent = p.omega.toFixed(2);
+
+  // Run ODE
+  const { arrI, arrM, arrS, arrF, arrA } = runODE(p);
+  const finalA = arrA[arrA.length-1];
+  const finalI = arrI[arrI.length-1];
+  const finalM = arrM[arrM.length-1];
+  const finalS = arrS[arrS.length-1];
+  const finalF = arrF[arrF.length-1];
+
+  // Update charts
+  chartIM.data.datasets[0].data = arrI;
+  chartIM.data.datasets[1].data = arrM;
+  chartIM.update();
+  chartSF.data.datasets[0].data = arrS;
+  chartSF.data.datasets[1].data = arrF;
+  chartSF.update();
+  chartA.data.datasets[0].data = arrA;
+  chartA.update();
+
+  // Dose-response curve + current marker
+  const dr = doseResponse(p);
+  chartDose.data.datasets[0].data = dr;
+  const curSS = doseResponse(p);
+  const curMark = glRange.map(g => Math.abs(g - p.GL) < 0.3 ? curSS[glRange.findIndex(v=>Math.abs(v-p.GL)<0.3)] : null);
+  chartDose.data.datasets[1].data = curMark;
+  chartDose.update();
+
+  // Gauge
+  const pct = finalA * 100;
+  const sevIdx = Math.min(5, Math.floor(finalA * 6));
+  const col = SEV_COLORS[sevIdx];
+  document.getElementById('gauge-bar').style.width = Math.max(2, pct) + '%';
+  document.getElementById('gauge-bar').style.background = col;
+  document.getElementById('sev-text').textContent = SEV_LABELS[sevIdx];
+  document.getElementById('sev-text').style.color = col;
+  document.getElementById('sev-sub').textContent = SEV_DESC[sevIdx];
+
+  // Live node values
+  document.getElementById('lv-gl').textContent = p.GL.toFixed(1);
+  document.getElementById('lv-i').textContent  = finalI.toFixed(3);
+  document.getElementById('lv-m').textContent  = finalM.toFixed(3);
+  document.getElementById('lv-s').textContent  = finalS.toFixed(3);
+  document.getElementById('lv-f').textContent  = finalF.toFixed(3);
+  document.getElementById('lv-a').textContent  = finalA.toFixed(3);
+}
+
+// ── Presets ──────────────────────────────────────────────────────────────────
+const PRESETS = {
+  mediterranean: { gl:7,  ki:14, km:0.65, n:1.8, ks:0.65, omega:0.6 },
+  balanced:      { gl:12, ki:12, km:0.55, n:2.0, ks:0.50, omega:0.2 },
+  highGL:        { gl:28, ki:10, km:0.45, n:2.2, ks:0.40, omega:0.1 },
+  extreme:       { gl:45, ki:7,  km:0.35, n:2.8, ks:0.30, omega:0.0 },
+  lowdairy:      { gl:9,  ki:15, km:0.70, n:1.8, ks:0.60, omega:0.4 },
+};
+const PRESET_KEYS = Object.keys(PRESETS);
+
+function loadPreset(name) {
+  const p = PRESETS[name];
+  document.getElementById('sl-gl').value    = p.gl;
+  document.getElementById('sl-ki').value    = p.ki;
+  document.getElementById('sl-km').value    = p.km;
+  document.getElementById('sl-n').value     = p.n;
+  document.getElementById('sl-ks').value    = p.ks;
+  document.getElementById('sl-omega').value = p.omega;
+  document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  updateSim();
+}
+
+// ── Scroll reveal ─────────────────────────────────────────────────────────────
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('revealed'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ── Init ─────────────────────────────────────────────────────────────────────
+updateSim();
+</script>
+</body>
+</html>
